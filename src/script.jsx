@@ -56,11 +56,11 @@ const Timer = (props) => {
       <p className="block-display" id="time-left">
         25:00
       </p>
-      <button type="button" id="start_stop">
+      <button type="button" className="btn-start-stop" id="start_stop">
         <i className="fas fa-play"></i>
         {/* <i className="fas fa-pause"></i> */}
       </button>
-      <button type="button" id="reset">
+      <button type="button" className="btn-reset" id="reset">
         <i className="fas fa-undo-alt"></i>
       </button>
     </div>

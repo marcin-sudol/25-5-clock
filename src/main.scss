@@ -33,7 +33,7 @@ $font-normal: "Montserrat", sans-serif;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: $accent-dark;
+  background-color: $color-lighter;
   background-image: linear-gradient($color-light, $color-lighter);
 }
 
@@ -41,32 +41,36 @@ $font-normal: "Montserrat", sans-serif;
   width: 100%;
   max-width: 460px;
   text-align: center;
-  color: $color-dark;
+  color: $color-lighter;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
-    margin: 20px 10px;
+    margin: 15px;
     border-radius: 20px;
-    background-color: $accent-light2;
-    border: 1px solid $color-dark;
+    background-color: $accent-medium2;
+    // border: 1px solid $color-medium;
     box-shadow: 0px 0px 5px 2px $color-medium;
 
     .block-label {
-      padding: 20px 0px;
-      text-transform: uppercase;
+      // text-transform: uppercase;
+      color: $color-lighter;
     }
 
     .block-display {
-      background-color: $accent-light;
+      margin: 0px 20px;
+      border-radius: 10px;
+      background-color: $accent-medium;
     }
 
     button {
       border: none;
       border-radius: 5px;
-      color: $color-dark;
-      box-shadow: 0px 5px 0 $color-dark;
+      background-color: $color-light;
+      color: $accent-dark2;
+      // box-shadow: 0px 5px 0px $accent-dark2;
 
       &:active {
+        // background-color: $accent-warm2;
         transform: translateY(2px);
       }
     }
@@ -75,6 +79,7 @@ $font-normal: "Montserrat", sans-serif;
   // TIMER PROPERTIES
   #timer {
     #timer-label {
+      padding: 40px 0px;
       font-size: 30px;
     }
 
@@ -100,6 +105,7 @@ $font-normal: "Montserrat", sans-serif;
       flex: 1 1 100%;
 
       .setup-label {
+        padding: 20px 0px;
         font-size: 16px;
       }
 
@@ -109,9 +115,9 @@ $font-normal: "Montserrat", sans-serif;
       }
 
       button {
-        margin: 20px 3px;
-        height: 40px;
-        width: 40px;
+        margin: 15px 3px;
+        height: 30px;
+        width: 30px;
         font-size: 20px;
       }
     }
