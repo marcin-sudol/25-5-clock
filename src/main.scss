@@ -1,30 +1,128 @@
 // VARIABLES
-$color-0: white;
-$color-light: hsl(46, 100%, 97%);
-$color-medium: hsl(38, 16%, 76%);
-$color-dark: hsl(34, 6%, 24%);
-$color-accent-light: hsl(17, 83%, 54%);
-$color-accent-dark: hsl(40, 4%, 14%);
+$color-lighter: #eee;
+$color-light: #ddd;
+$color-medium: #222;
+$color-dark: #111;
 
-$font-em: 'Comfortaa', cursive;
-$font-normal: 'Montserrat', sans-serif;
+$accent-super-light: #f4f1de;
+$accent-lighter: #f4f1de;
+$accent-light: #f2cc8f;
+$accent-light2: #eebc6d;
+$accent-warm: #e07a5f;
+$accent-warm2: #db6443;
+$accent-medium: #81b19b;
+$accent-medium2: #67a288;
+$accent-dark: #3d405b;
+$accent-dark2: #181925;
 
-
+$font-em: "Comfortaa", cursive;
+$font-normal: "Montserrat", sans-serif;
 
 // DEFAULT VALUES
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: $font-normal;
-    /* border: 1px solid; */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $font-normal;
+  // border: 1px solid;
 }
 
-html {
-    scroll-behavior: smooth;
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: linear-gradient($color-light, $color-lighter);
 }
 
-a {
-    text-decoration: none;
+#clock-app {
+  margin: 0px 3px;
+  padding: 5px;
+  width: 100%;
+  max-width: 460px;
+  background-color: $accent-dark;
+  border-radius: 30px;
+  text-align: center;
+  color: $color-dark;
+
+  // PROPERTIES COMMON TO TIMER AND SETUP
+  .block {
+    margin: 5px;
+    border-radius: 20px;
+    background-color: $accent-light2;
+
+    .block-label {
+      padding: 15px 0px;
+      text-transform: uppercase;
+    }
+
+    .block-display {
+      background-color: $accent-light;
+    }
+
+    button {
+      border: none;
+      border-radius: 5px;
+      color: $accent-dark;
+      box-shadow: 0 5px 0 $accent-dark;
+
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+
+  // TIMER PROPERTIES
+  #timer {
+    #timer-label {
+      font-size: 30px;
+    }
+
+    #time-left {
+      padding: 30px 5px;
+      font-size: 90px;
+    }
+
+    button {
+      margin: 30px 5px;
+      height: 60px;
+      width: 60px;
+      font-size: 30px;
+    }
+  }
+
+  // SETTING PROPERTIES
+  #settings {
+    display: flex;
+    flex-direction: row;
+
+    .setup-block {
+      flex: 1 1 100%;
+
+      .setup-label {
+        font-size: 16px;
+      }
+
+      .setup-display {
+        padding: 10px 5px;
+        font-size: 40px;
+      }
+
+      button {
+        margin: 20px 1px;
+        height: 40px;
+        width: 40px;
+        font-size: 20px;
+      }
+    }
+  }
 }
 
+// ICONS
+// .play-icon {
+//   @extend .fas.fa-play;
+// }
+
+// .pause-icon {
+//   @extend .fas.fa-pause;
+// }
