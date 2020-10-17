@@ -5,56 +5,40 @@ class Clock extends React.Component {
 
     // ----- STATE -----
     this.state = {
-      session: this.props.initSession,
-      break: this.props.initBreak,
+      times: this.props.initialTimes,
     };
 
     // ----- BINDING METHODS -----
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange = (name, change) => {
-    if (name === "session" && change === "increment")
-      this.setState((state) => ({
-        session: state.session < 60 ? state.session + 1 : state.session,
-      }));
+  handleChange = (category, change) => {
+    newTimes = Object.assign({}, this.state.times);
+    if (change === "increment" && newTimes[category] < 60)
+      newTimes[category] = this.state.times[category] + 1;
+    if (change === "decrement" && newTimes[category] > 1)
+      newTimes[category] = this.state.times[category] - 1;
+    if (change === "reset")
+      newTimes[category] = this.props.initialTimes[category];
+    console.log(newTimes);
 
-    if (name === "session" && change === "decrement")
-      this.setState((state) => ({
-        session: state.session > 1 ? state.session - 1 : state.session,
-      }));
-
-    if (name === "session" && change === "reset")
-      this.setState({ session: this.props.initSession });
-
-    if (name === "break" && change === "increment")
-      this.setState((state) => ({
-        break: state.break < 60 ? state.break + 1 : state.break,
-      }));
-
-    if (name === "break" && change === "decrement")
-      this.setState((state) => ({
-        break: state.break > 1 ? state.break - 1 : state.break,
-      }));
-
-    if (name === "break" && change === "reset")
-      this.setState({ break: this.props.initBreak });
+    this.setState({ times: newTimes });
   };
 
   // ----- RENDER -----
   render() {
     return (
       <div id="clock-app">
-        <Timer name="session" />
+        <Timer category="session" />
         <div id="settings">
           <Setup
-            name="session"
-            value={this.state.session}
+            category="session"
+            time={this.state.times["session"]}
             onChange={this.handleChange}
           />
           <Setup
-            name="break"
-            value={this.state.break}
+            category="break"
+            time={this.state.times["break"]}
             onChange={this.handleChange}
           />
         </div>
@@ -67,7 +51,7 @@ const Timer = (props) => {
   return (
     <div className="block" id="timer">
       <h4 className="block-label" id="timer-label">
-        {props.name}
+        {props.category}
       </h4>
       <p className="block-display" id="time-left">
         25:00
@@ -85,24 +69,24 @@ const Timer = (props) => {
 
 // setup
 const Setup = (props) => {
-  const setupId = props.name + "-setup";
-  const labelId = props.name + "-label";
-  const label = props.name + " length";
-  const displayId = props.name + "-length";
-  const btnIncId = props.name + "-increment";
-  const btnDecId = props.name + "-decrement";
-  const btnResetId = props.name + "-reset";
+  const setupId = props.category + "-setup";
+  const labelId = props.category + "-label";
+  const label = props.category + " length";
+  const displayId = props.category + "-length";
+  const btnIncId = props.category + "-increment";
+  const btnDecId = props.category + "-decrement";
+  const btnResetId = props.category + "-reset";
 
   const increment = () => {
-    props.onChange(props.name, "increment");
+    props.onChange(props.category, "increment");
   };
 
   const decrement = () => {
-    props.onChange(props.name, "decrement");
+    props.onChange(props.category, "decrement");
   };
 
   const reset = () => {
-    props.onChange(props.name, "reset");
+    props.onChange(props.category, "reset");
   };
 
   return (
@@ -112,7 +96,7 @@ const Setup = (props) => {
       </h4>
 
       <p className="block-display setup-display" id={displayId}>
-        {props.value}
+        {props.time}
       </p>
 
       <button
@@ -147,6 +131,6 @@ const Setup = (props) => {
 
 // ----- RENDER COMPONENT -----
 ReactDOM.render(
-  <Clock initSession={25} initBreak={5} />,
+  <Clock initialTimes={{ session: 25, break: 5 }} />,
   document.getElementById("root")
 );
