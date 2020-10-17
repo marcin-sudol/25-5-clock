@@ -1,8 +1,9 @@
 // VARIABLES
 $color-lighter: #eee;
 $color-light: #ddd;
-$color-medium: #222;
-$color-dark: #111;
+$color-medium: #aaa;
+$color-dark: #222;
+$color-darker: #111;
 
 $accent-super-light: #f4f1de;
 $accent-lighter: #f4f1de;
@@ -13,7 +14,7 @@ $accent-warm2: #db6443;
 $accent-medium: #81b19b;
 $accent-medium2: #67a288;
 $accent-dark: #3d405b;
-$accent-dark2: #181925;
+$accent-dark2: #292b3d;
 
 $font-em: "Comfortaa", cursive;
 $font-normal: "Montserrat", sans-serif;
@@ -32,21 +33,23 @@ $font-normal: "Montserrat", sans-serif;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: linear-gradient($accent-dark2, $accent-dark);
+  background-color: $accent-dark;
+  background-image: linear-gradient($color-light, $color-lighter);
 }
 
 #clock-app {
   width: 100%;
   max-width: 460px;
   text-align: center;
-  color: $accent-dark2;
+  color: $color-dark;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
     margin: 20px 10px;
     border-radius: 20px;
     background-color: $accent-light2;
-    box-shadow: 0 5px 0 $accent-dark2;
+    border: 1px solid $color-dark;
+    box-shadow: 0px 0px 5px 2px $color-medium;
 
     .block-label {
       padding: 20px 0px;
@@ -60,8 +63,8 @@ $font-normal: "Montserrat", sans-serif;
     button {
       border: none;
       border-radius: 5px;
-      color: $accent-dark2;
-      box-shadow: 0 5px 0 $accent-dark2;
+      color: $color-dark;
+      box-shadow: 0px 5px 0 $color-dark;
 
       &:active {
         transform: translateY(2px);
@@ -106,7 +109,7 @@ $font-normal: "Montserrat", sans-serif;
       }
 
       button {
-        margin: 20px 1px;
+        margin: 20px 3px;
         height: 40px;
         width: 40px;
         font-size: 20px;
