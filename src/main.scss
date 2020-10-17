@@ -32,27 +32,24 @@ $font-normal: "Montserrat", sans-serif;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: linear-gradient($color-light, $color-lighter);
+  background-image: linear-gradient($accent-dark2, $accent-dark);
 }
 
 #clock-app {
-  margin: 0px 3px;
-  padding: 5px;
   width: 100%;
   max-width: 460px;
-  background-color: $accent-dark;
-  border-radius: 30px;
   text-align: center;
-  color: $color-dark;
+  color: $accent-dark2;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
-    margin: 5px;
+    margin: 20px 10px;
     border-radius: 20px;
     background-color: $accent-light2;
+    box-shadow: 0 5px 0 $accent-dark2;
 
     .block-label {
-      padding: 15px 0px;
+      padding: 20px 0px;
       text-transform: uppercase;
     }
 
@@ -63,8 +60,8 @@ $font-normal: "Montserrat", sans-serif;
     button {
       border: none;
       border-radius: 5px;
-      color: $accent-dark;
-      box-shadow: 0 5px 0 $accent-dark;
+      color: $accent-dark2;
+      box-shadow: 0 5px 0 $accent-dark2;
 
       &:active {
         transform: translateY(2px);
