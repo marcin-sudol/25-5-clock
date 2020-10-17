@@ -1,118 +1,152 @@
-
-
-
-
-
 // ----- CLASS COMPONENT -----
 class Clock extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        // ----- STATE FOR STATEFUL COMPONENT -----
-        this.state = {
-            session: 25,
-            break: 5
-        };
+    // ----- STATE -----
+    this.state = {
+      session: this.props.initSession,
+      break: this.props.initBreak,
+    };
 
-        // ----- BINDING METHODS -----
-        // this.handleChange = this.handleChange.bind(this);
-    }
+    // ----- BINDING METHODS -----
+    this.handleChange = this.handleChange.bind(this);
+  }
 
-    // ----- RENDER -----
-    render() {
-        return (
-            <div id="clock-app">
-                <Timer name="session" />
-                <div id="settings">
-                    <Setup name="session" value={25} />
-                    <Setup name="setup" value={5} />
-                </div>
-            </div>
-        );
-    }
-};
+  handleChange = (name, change) => {
+    if (name === "session" && change === "increment")
+      this.setState((state) => ({
+        session: state.session < 60 ? state.session + 1 : state.session,
+      }));
 
+    if (name === "session" && change === "decrement")
+      this.setState((state) => ({
+        session: state.session > 1 ? state.session - 1 : state.session,
+      }));
 
+    if (name === "session" && change === "reset")
+      this.setState({ session: this.props.initSession });
 
-const Timer = (props) => {
+    if (name === "break" && change === "increment")
+      this.setState((state) => ({
+        break: state.break < 60 ? state.break + 1 : state.break,
+      }));
+
+    if (name === "break" && change === "decrement")
+      this.setState((state) => ({
+        break: state.break > 1 ? state.break - 1 : state.break,
+      }));
+
+    if (name === "break" && change === "reset")
+      this.setState({ break: this.props.initBreak });
+  };
+
+  // ----- RENDER -----
+  render() {
     return (
-        <div className="block"
-            id="timer">
-            <h4 className="block-label"
-                id="timer-label">
-                {props.name}
-            </h4>
-            <p className="block-display"
-                id="time-left">
-                25:00
-            </p>
-            <button type="button"
-                id="start_stop">
-                <i className="fas fa-play"></i>
-                {/* <i className="fas fa-pause"></i> */}
-            </button>
-            <button type="button"
-                id="reset">
-                <i className="fas fa-undo-alt"></i>
-            </button>
+      <div id="clock-app">
+        <Timer name="session" />
+        <div id="settings">
+          <Setup
+            name="session"
+            value={this.state.session}
+            onChange={this.handleChange}
+          />
+          <Setup
+            name="break"
+            value={this.state.break}
+            onChange={this.handleChange}
+          />
         </div>
+      </div>
     );
+  }
 }
 
-
+const Timer = (props) => {
+  return (
+    <div className="block" id="timer">
+      <h4 className="block-label" id="timer-label">
+        {props.name}
+      </h4>
+      <p className="block-display" id="time-left">
+        25:00
+      </p>
+      <button type="button" id="start_stop">
+        <i className="fas fa-play"></i>
+        {/* <i className="fas fa-pause"></i> */}
+      </button>
+      <button type="button" id="reset">
+        <i className="fas fa-undo-alt"></i>
+      </button>
+    </div>
+  );
+};
 
 // setup
 const Setup = (props) => {
+  const setupId = props.name + "-setup";
+  const labelId = props.name + "-label";
+  const label = props.name + " length";
+  const displayId = props.name + "-length";
+  const btnIncId = props.name + "-increment";
+  const btnDecId = props.name + "-decrement";
+  const btnResetId = props.name + "-reset";
 
-    const setupId = props.name + "-setup";
-    const labelId = props.name + "-label";
-    const label = props.name + " Length";
-    const displayId = props.name + "-length";
-    const btnIncId = props.name + "-increment";
-    const btnDecId = props.name + "-decrement";
-    const btnResetId = props.name + "-reset";
+  const increment = () => {
+    props.onChange(props.name, "increment");
+  };
 
-    return (
-        <div className="block setup-block"
-            id={setupId}>
+  const decrement = () => {
+    props.onChange(props.name, "decrement");
+  };
 
-            <h4 className="block-label setup-label"
-                id={labelId}>
-                {label}
-            </h4>
+  const reset = () => {
+    props.onChange(props.name, "reset");
+  };
 
-            <p className="block-display setup-display"
-                id={displayId}>
-                {props.value}
-            </p>
+  return (
+    <div className="block setup-block" id={setupId}>
+      <h4 className="block-label setup-label" id={labelId}>
+        {label}
+      </h4>
 
-            <button type="button"
-                className="btn-increment"
-                id={btnIncId}>
-                <i className="fas fa-chevron-up"></i>
-            </button>
+      <p className="block-display setup-display" id={displayId}>
+        {props.value}
+      </p>
 
-            <button type="button"
-                className="btn-decrement"
-                id={btnDecId}>
-                <i className="fas fa-chevron-down"></i>
-            </button>
+      <button
+        type="button"
+        className="btn-increment"
+        id={btnIncId}
+        onClick={increment}
+      >
+        <i className="fas fa-chevron-up"></i>
+      </button>
 
-            <button type="button"
-                className="btn-reset"
-                id={btnResetId}>
-                <i className="fas fa-undo-alt"></i>
-            </button>
+      <button
+        type="button"
+        className="btn-decrement"
+        id={btnDecId}
+        onClick={decrement}
+      >
+        <i className="fas fa-chevron-down"></i>
+      </button>
 
-        </div>
-    );
+      <button
+        type="button"
+        className="btn-reset"
+        id={btnResetId}
+        onClick={reset}
+      >
+        <i className="fas fa-undo-alt"></i>
+      </button>
+    </div>
+  );
 };
-
-
 
 // ----- RENDER COMPONENT -----
 ReactDOM.render(
-    <Clock />,
-    document.getElementById('root')
+  <Clock initSession={25} initBreak={5} />,
+  document.getElementById("root")
 );
-
