@@ -16,7 +16,7 @@ $accent-medium2: #67a288;
 $accent-dark: #3d405b;
 $accent-dark2: #292b3d;
 
-$font-normal: "Roboto Slab", serif;
+$font-normal: "Open Sans", sans-serif;
 $font-em: "Oxanium", cursive;
 
 // DEFAULT VALUES
@@ -38,29 +38,28 @@ $font-em: "Oxanium", cursive;
 
 #clock-app {
   width: 100%;
-  max-width: 460px;
+  max-width: 400px;
   text-align: center;
   font-family: $font-normal;
-  color: $color-lighter;
+  color: $accent-dark;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
     margin: 15px;
     border-radius: 20px;
-    background-color: $accent-dark2;
+    background-color: $color-light;
     box-shadow: 0px 0px 5px 2px $color-medium;
 
     .block-display {
       margin: 0px 20px;
-      border-radius: 10px;
-      background-color: $accent-dark;
+      background-color: $color-lighter;
       font-family: $font-em;
     }
 
     button {
       border: none;
       border-radius: 5px;
-      color: $accent-dark2;
+      color: $color-lighter;
 
       &:active {
         transform: translateY(2px);
@@ -70,26 +69,23 @@ $font-em: "Oxanium", cursive;
 
   // TIMER PROPERTIES
   #timer {
-    #timer-header {
-      padding: 10px;
-      h1 {
-        padding: 10px 0px;
-        font-size: 40px;
-        text-transform: uppercase;
-      }
-      h2 {
-        font-size: 20px;
-      }
+    #timer-header > h1 {
+      margin-top: 10px;
+      padding: 15px 0px;
+      font-size: 20px;
+      color: $color-dark;
     }
 
     .block-label {
-      padding: 10px 0px;
-      padding-bottom: 30px;
-      font-size: 30px;
+      margin-bottom: 10px;
+      padding: 15px 0px;
+      font-size: 26px;
+      text-transform: uppercase;
     }
 
     .block-display {
       padding: 30px 5px;
+      border-radius: 20px;
       font-size: 90px;
     }
 
@@ -111,11 +107,12 @@ $font-em: "Oxanium", cursive;
 
       .block-label {
         padding: 20px 0px;
-        font-size: 16px;
+        font-size: 14px;
       }
 
       .block-display {
         padding: 10px 5px;
+        border-radius: 10px;
         font-size: 40px;
       }
 
@@ -132,18 +129,18 @@ $font-em: "Oxanium", cursive;
 // COLORS FOR SPECIFIC SETTINGS
 .session-colors {
   .block-label {
-    color: $accent-light;
+    color: $accent-dark;
   }
   button {
-    background-color: $accent-light;
+    background-color: $accent-dark;
   }
 }
 
 .break-colors {
   .block-label {
-    color: $accent-medium;
+    color: $accent-medium2;
   }
   button {
-    background-color: $accent-medium;
+    background-color: $accent-medium2;
   }
 }

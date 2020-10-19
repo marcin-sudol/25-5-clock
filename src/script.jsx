@@ -1,7 +1,5 @@
 "use strict";
 
-// change icon
-
 // ----- CLASS COMPONENT -----
 class Clock extends React.Component {
   constructor(props) {
@@ -202,8 +200,7 @@ const Timer = (props) => {
   return (
     <div className={"block " + props.category + "-colors"} id="timer">
       <header id="timer-header">
-        <h1>Clock</h1>
-        <h2>{header}</h2>
+        <h1>{header}</h1>
       </header>
       <h4 className="block-label" id="timer-label">
         {props.category}
