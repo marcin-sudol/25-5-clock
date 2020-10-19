@@ -16,15 +16,15 @@ $accent-medium2: #67a288;
 $accent-dark: #3d405b;
 $accent-dark2: #292b3d;
 
-$font-em: "Comfortaa", cursive;
-$font-normal: "Montserrat", sans-serif;
+$font-em: "Fredoka One", cursive;
+$font-normal: "Raleway", sans-serif;
+// $font-normal: "Open Sans", sans-serif;
 
 // DEFAULT VALUES
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $font-normal;
   // border: 1px solid;
 }
 
@@ -41,36 +41,33 @@ $font-normal: "Montserrat", sans-serif;
   width: 100%;
   max-width: 460px;
   text-align: center;
+  font-family: $font-normal;
   color: $color-lighter;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
     margin: 15px;
     border-radius: 20px;
-    background-color: $accent-medium2;
-    // border: 1px solid $color-medium;
+    background-color: $accent-dark2;
     box-shadow: 0px 0px 5px 2px $color-medium;
 
     .block-label {
-      // text-transform: uppercase;
-      color: $color-lighter;
+      text-transform: uppercase;
+      font-family: $font-em;
     }
 
     .block-display {
       margin: 0px 20px;
       border-radius: 10px;
-      background-color: $accent-medium;
+      background-color: $accent-dark;
     }
 
     button {
       border: none;
       border-radius: 5px;
-      background-color: $color-light;
       color: $accent-dark2;
-      // box-shadow: 0px 5px 0px $accent-dark2;
 
       &:active {
-        // background-color: $accent-warm2;
         transform: translateY(2px);
       }
     }
@@ -78,12 +75,12 @@ $font-normal: "Montserrat", sans-serif;
 
   // TIMER PROPERTIES
   #timer {
-    #timer-label {
+    .block-label {
       padding: 40px 0px;
       font-size: 30px;
     }
 
-    #time-left {
+    .block-display {
       padding: 30px 5px;
       font-size: 90px;
     }
@@ -104,12 +101,12 @@ $font-normal: "Montserrat", sans-serif;
     .setup-block {
       flex: 1 1 100%;
 
-      .setup-label {
+      .block-label {
         padding: 20px 0px;
         font-size: 16px;
       }
 
-      .setup-display {
+      .block-display {
         padding: 10px 5px;
         font-size: 40px;
       }
@@ -121,14 +118,24 @@ $font-normal: "Montserrat", sans-serif;
         font-size: 20px;
       }
     }
+
+    // COLORS FOR SPECIFIC SETTINGS
+    .session-colors {
+      .block-label {
+        color: $accent-light;
+      }
+      button {
+        background-color: $accent-light;
+      }
+    }
+
+    .break-colors {
+      .block-label {
+        color: $accent-medium;
+      }
+      button {
+        background-color: $accent-medium;
+      }
+    }
   }
 }
-
-// ICONS
-// .play-icon {
-//   @extend .fas.fa-play;
-// }
-
-// .pause-icon {
-//   @extend .fas.fa-pause;
-// }

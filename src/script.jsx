@@ -31,7 +31,7 @@ class Clock extends React.Component {
   render() {
     return (
       <div id="clock-app">
-        <Timer category="session" />
+        <Timer category="break" />
         <div id="settings">
           <Setup
             category="session"
@@ -51,7 +51,7 @@ class Clock extends React.Component {
 
 const Timer = (props) => {
   return (
-    <div className="block" id="timer">
+    <div className={"block " + props.category + "-colors"} id="timer">
       <h4 className="block-label" id="timer-label">
         {props.category}
       </h4>
@@ -92,7 +92,10 @@ const Setup = (props) => {
   };
 
   return (
-    <div className="block setup-block" id={setupId}>
+    <div
+      className={"block setup-block " + props.category + "-colors"}
+      id={setupId}
+    >
       <h4 className="block-label setup-label" id={labelId}>
         {label}
       </h4>
