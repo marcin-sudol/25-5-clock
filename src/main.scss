@@ -70,8 +70,21 @@ $font-em: "Oxanium", cursive;
 
   // TIMER PROPERTIES
   #timer {
+    #timer-header {
+      padding: 10px;
+      h1 {
+        padding: 10px 0px;
+        font-size: 40px;
+        text-transform: uppercase;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+
     .block-label {
-      padding: 40px 0px;
+      padding: 10px 0px;
+      padding-bottom: 30px;
       font-size: 30px;
     }
 
