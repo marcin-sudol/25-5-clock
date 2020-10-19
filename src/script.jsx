@@ -9,11 +9,11 @@ class Clock extends React.Component {
 
     // ----- STATE -----
     this.state = {
-      setupTimes: this.props.initialTimes,
-      currentTimes: this.props.initialTimes,
+      setupTimes: this.props.defaultTimes,
+      currentTimes: this.props.defaultTimes,
       category: "session",
       clock: {
-        minutes: this.props.initialTimes["session"],
+        minutes: this.props.defaultTimes["session"],
         seconds: 0,
       },
       running: false,
@@ -27,7 +27,8 @@ class Clock extends React.Component {
     this.stopClock = this.stopClock.bind(this);
     this.toggleClock = this.toggleClock.bind(this);
     this.updateClock = this.updateClock.bind(this);
-    this.saveSetupToCurrent = this.saveSetupToCurrent.bind(this);
+    this.setCurrentToSetup = this.setCurrentToSetup.bind(this);
+    this.setTimesToDefault = this.setTimesToDefault.bind(this);
     this.switchCategory = this.switchCategory.bind(this);
     this.clockStep = this.clockStep.bind(this);
   }
@@ -38,8 +39,6 @@ class Clock extends React.Component {
       newSetupTimes[category] = this.state.setupTimes[category] + 1;
     else if (change === "decrement" && this.state.setupTimes[category] > 1)
       newSetupTimes[category] = this.state.setupTimes[category] - 1;
-    else if (change === "reset")
-      newSetupTimes[category] = this.props.initialTimes[category];
 
     if (this.state.running) {
       this.setState({
@@ -50,7 +49,7 @@ class Clock extends React.Component {
         {
           setupTimes: newSetupTimes,
         },
-        this.saveSetupToCurrent
+        this.setCurrentToSetup
       );
     }
   };
@@ -59,7 +58,7 @@ class Clock extends React.Component {
     if (change === "start-stop") this.toggleClock();
     else if (change === "reset") {
       this.stopClock();
-      this.saveSetupToCurrent();
+      this.setTimesToDefault();
     }
   };
 
@@ -93,10 +92,26 @@ class Clock extends React.Component {
     }));
   };
 
-  saveSetupToCurrent = () => {
+  setCurrentToSetup = () => {
     this.setState((state) => {
       const newCurrentTimes = Object.assign({}, state.setupTimes);
       return {
+        currentTimes: newCurrentTimes,
+        category: "session",
+        clock: {
+          minutes: newCurrentTimes["session"],
+          seconds: 0,
+        },
+      };
+    });
+  };
+
+  setTimesToDefault = () => {
+    this.setState((state) => {
+      const newSetupTimes = Object.assign({}, this.props.defaultTimes);
+      const newCurrentTimes = Object.assign({}, this.props.defaultTimes);
+      return {
+        setupTimes: newSetupTimes,
         currentTimes: newCurrentTimes,
         category: "session",
         clock: {
@@ -220,7 +235,6 @@ const Setup = (props) => {
   const displayId = props.category + "-length";
   const btnIncId = props.category + "-increment";
   const btnDecId = props.category + "-decrement";
-  const btnResetId = props.category + "-reset";
 
   const increment = () => {
     props.onChange(props.category, "increment");
@@ -228,10 +242,6 @@ const Setup = (props) => {
 
   const decrement = () => {
     props.onChange(props.category, "decrement");
-  };
-
-  const reset = () => {
-    props.onChange(props.category, "reset");
   };
 
   return (
@@ -264,21 +274,12 @@ const Setup = (props) => {
       >
         <i className="fas fa-chevron-down"></i>
       </button>
-
-      <button
-        type="button"
-        className="btn-reset"
-        id={btnResetId}
-        onClick={reset}
-      >
-        <i className="fas fa-undo-alt"></i>
-      </button>
     </div>
   );
 };
 
 // ----- RENDER COMPONENT -----
 ReactDOM.render(
-  <Clock initialTimes={{ session: 25, break: 5 }} />,
+  <Clock defaultTimes={{ session: 25, break: 5 }} />,
   document.getElementById("root")
 );
