@@ -1,3 +1,5 @@
+"use strict";
+
 // ----- CLASS COMPONENT -----
 class Clock extends React.Component {
   constructor(props) {
@@ -13,14 +15,14 @@ class Clock extends React.Component {
   }
 
   handleChange = (category, change) => {
-    newTimes = Object.assign({}, this.state.times);
+    let newTimes = Object.assign({}, this.state.times);
+
     if (change === "increment" && newTimes[category] < 60)
       newTimes[category] = this.state.times[category] + 1;
     if (change === "decrement" && newTimes[category] > 1)
       newTimes[category] = this.state.times[category] - 1;
     if (change === "reset")
       newTimes[category] = this.props.initialTimes[category];
-    console.log(newTimes);
 
     this.setState({ times: newTimes });
   };
