@@ -16,9 +16,8 @@ $accent-medium2: #67a288;
 $accent-dark: #3d405b;
 $accent-dark2: #292b3d;
 
-$font-em: "Fredoka One", cursive;
-$font-normal: "Raleway", sans-serif;
-// $font-normal: "Open Sans", sans-serif;
+$font-normal: "Roboto Slab", serif;
+$font-em: "Oxanium", cursive;
 
 // DEFAULT VALUES
 * {
@@ -51,15 +50,11 @@ $font-normal: "Raleway", sans-serif;
     background-color: $accent-dark2;
     box-shadow: 0px 0px 5px 2px $color-medium;
 
-    .block-label {
-      text-transform: uppercase;
-      font-family: $font-em;
-    }
-
     .block-display {
       margin: 0px 20px;
       border-radius: 10px;
       background-color: $accent-dark;
+      font-family: $font-em;
     }
 
     button {
@@ -118,24 +113,24 @@ $font-normal: "Raleway", sans-serif;
         font-size: 20px;
       }
     }
+  }
+}
 
-    // COLORS FOR SPECIFIC SETTINGS
-    .session-colors {
-      .block-label {
-        color: $accent-light;
-      }
-      button {
-        background-color: $accent-light;
-      }
-    }
+// COLORS FOR SPECIFIC SETTINGS
+.session-colors {
+  .block-label {
+    color: $accent-light;
+  }
+  button {
+    background-color: $accent-light;
+  }
+}
 
-    .break-colors {
-      .block-label {
-        color: $accent-medium;
-      }
-      button {
-        background-color: $accent-medium;
-      }
-    }
+.break-colors {
+  .block-label {
+    color: $accent-medium;
+  }
+  button {
+    background-color: $accent-medium;
   }
 }
