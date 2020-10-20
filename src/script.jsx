@@ -222,7 +222,7 @@ const Timer = (props) => {
           id="start_stop"
           onClick={startStop}
         >
-          <i className="fas fa-play"></i>
+          <i className="fas fa-play"></i> <i className="fas fa-pause"></i>
           {/* <i className="fas fa-pause"></i> */}
         </button>
         <button type="button" className="btn-reset" id="reset" onClick={reset}>
