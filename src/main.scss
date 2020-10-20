@@ -1,14 +1,14 @@
 // VARIABLES
 $color-lighter: #eee;
 $color-light: #ddd;
-$color-medium: #aaa;
+$color-medium: #bbb;
 $color-dark: #444;
 
 $accent-primary: #0075c4;
 $accent-secondary: #d65108;
 
 $font-normal: "Jura", sans-serif;
-$font-em: "Montserrat", sans-serif;
+$font-em: "Oxanium", cursive;
 
 // DEFAULT VALUES
 * {
@@ -27,12 +27,12 @@ $font-em: "Montserrat", sans-serif;
   background-image: linear-gradient($color-light, $color-lighter);
 }
 
+// CLOCK APP
 #clock-app {
   width: 100%;
   max-width: 360px;
   text-align: center;
   font-family: $font-normal;
-  color: $color-dark;
 
   // PROPERTIES COMMON TO TIMER AND SETUP
   .block {
@@ -43,8 +43,6 @@ $font-em: "Montserrat", sans-serif;
     background-color: $color-lighter;
 
     .block-display {
-      background-color: $color-lighter;
-      border-radius: 5px;
       font-family: $font-em;
     }
     .buttons {
@@ -52,9 +50,8 @@ $font-em: "Montserrat", sans-serif;
       flex-direction: row;
       button {
         flex: 1 1 50%;
-        border: none;
         border-radius: 5px;
-        color: $color-lighter;
+        transition: background-color 0.3s ease;
 
         &:active {
           transform: translateY(2px);
@@ -71,14 +68,13 @@ $font-em: "Montserrat", sans-serif;
     }
 
     .block-display {
-      margin: 10px 10px;
       font-size: 70px;
     }
 
     button {
-      margin: 20px 10px;
-      height: 50px;
-      font-size: 26px;
+      margin: 30px 10px;
+      height: 40px;
+      font-size: 22px;
     }
   }
 
@@ -88,43 +84,45 @@ $font-em: "Montserrat", sans-serif;
     flex-direction: row;
 
     .setup-block {
-      flex: 1 1 100%;
+      flex: 1 1 50%;
 
       .block-label {
         padding: 15px 0px;
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .block-display {
-        margin: 10px 5px;
         font-size: 40px;
       }
 
       button {
-        margin: 10px 5px;
-        height: 30px;
-        width: 30px;
-        font-size: 20px;
+        margin: 15px 5px;
+        height: 24px;
+        font-size: 14px;
       }
     }
   }
 }
 
 // COLORS FOR SPECIFIC SETTINGS
-.session-colors {
+@mixin category-color($color) {
   .block-label {
-    color: $accent-primary;
+    color: $color;
   }
   button {
-    background-color: $accent-primary;
+    border: 1px solid $color;
+    color: $color;
+    &:hover {
+      background-color: $color;
+      color: $color-lighter;
+    }
   }
 }
 
+.session-colors {
+  @include category-color($accent-primary);
+}
+
 .break-colors {
-  .block-label {
-    color: $accent-secondary;
-  }
-  button {
-    background-color: $accent-secondary;
-  }
+  @include category-color($accent-secondary);
 }
