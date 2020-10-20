@@ -42,6 +42,7 @@ $font-em: "Oxanium", cursive;
     border-radius: 5px;
     border: 1px solid $color-medium;
     background-color: $color-lighter;
+    box-shadow: 0px 6px 6px 4px $color-light;
 
     .block-display {
       font-family: $font-em;
