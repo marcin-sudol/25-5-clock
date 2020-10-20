@@ -7,14 +7,14 @@ class Clock extends React.Component {
 
     // ----- STATE -----
     this.state = {
-      setupTimes: this.props.defaultTimes,
-      currentTimes: this.props.defaultTimes,
+      times: this.props.defaultTimes,
       category: "session",
       clock: {
         minutes: this.props.defaultTimes["session"],
         seconds: 0,
       },
       running: false,
+      paused: false,
       timerId: 0,
     };
 
@@ -22,109 +22,103 @@ class Clock extends React.Component {
     this.handleSetupInput = this.handleSetupInput.bind(this);
     this.handleTimerInput = this.handleTimerInput.bind(this);
     this.startClock = this.startClock.bind(this);
+    this.pauseClock = this.pauseClock.bind(this);
     this.stopClock = this.stopClock.bind(this);
     this.toggleClock = this.toggleClock.bind(this);
-    this.updateClock = this.updateClock.bind(this);
-    this.setCurrentToSetup = this.setCurrentToSetup.bind(this);
-    this.setTimesToDefault = this.setTimesToDefault.bind(this);
+    this.resetClock = this.resetClock.bind(this);
+    this.switchClockToCategory = this.switchClockToCategory.bind(this);
     this.switchCategory = this.switchCategory.bind(this);
     this.clockStep = this.clockStep.bind(this);
   }
 
   handleSetupInput = (category, change) => {
-    const newSetupTimes = Object.assign({}, this.state.setupTimes);
-    if (change === "increment" && this.state.setupTimes[category] < 60)
-      newSetupTimes[category] = this.state.setupTimes[category] + 1;
-    else if (change === "decrement" && this.state.setupTimes[category] > 1)
-      newSetupTimes[category] = this.state.setupTimes[category] - 1;
+    if (!this.state.running) {
+      const newTimes = Object.assign({}, this.state.times);
+      if (change === "increment" && this.state.times[category] < 60)
+        newTimes[category] = this.state.times[category] + 1;
+      else if (change === "decrement" && this.state.times[category] > 1)
+        newTimes[category] = this.state.times[category] - 1;
 
-    if (this.state.running) {
-      this.setState({
-        setupTimes: newSetupTimes,
-      });
-    } else {
       this.setState(
         {
-          setupTimes: newSetupTimes,
+          times: newTimes,
         },
-        this.setCurrentToSetup
+        () => {
+          this.switchClockToCategory("session");
+        }
       );
     }
   };
 
   handleTimerInput = (change) => {
-    if (change === "start-stop") this.toggleClock();
-    else if (change === "reset") {
-      this.stopClock();
-      this.setTimesToDefault();
+    if (change === "start-stop") {
+      this.toggleClock();
+    } else if (change === "reset") {
+      this.resetClock();
     }
   };
 
   startClock = () => {
     this.setState({
       running: true,
+      paused: false,
       timerId: window.setInterval(this.clockStep, 1000),
+    });
+  };
+
+  pauseClock = () => {
+    window.clearInterval(this.state.timerId);
+    this.setState({
+      running: true,
+      paused: true,
     });
   };
 
   stopClock = () => {
     window.clearInterval(this.state.timerId);
-    this.setState({ running: false });
+    this.setState({
+      running: false,
+      paused: false,
+    });
   };
 
   toggleClock = () => {
-    if (this.state.running) {
-      this.stopClock();
-    } else {
+    if (!this.state.running || this.state.paused) {
       this.startClock();
+    } else {
+      this.pauseClock();
     }
   };
 
-  updateClock = (category) => {
+  resetClock = () => {
+    this.setState(
+      {
+        times: Object.assign({}, this.props.defaultTimes),
+        category: "session",
+        clock: {
+          minutes: this.props.defaultTimes["session"],
+          seconds: 0,
+        },
+      },
+      this.stopClock
+    );
+  };
+
+  switchClockToCategory = (category) => {
     this.setState((state) => ({
       category,
       clock: {
-        minutes: state.currentTimes[category],
+        minutes: state.times[category],
         seconds: 0,
       },
     }));
   };
 
-  setCurrentToSetup = () => {
-    this.setState((state) => {
-      const newCurrentTimes = Object.assign({}, state.setupTimes);
-      return {
-        currentTimes: newCurrentTimes,
-        category: "session",
-        clock: {
-          minutes: newCurrentTimes["session"],
-          seconds: 0,
-        },
-      };
-    });
-  };
-
-  setTimesToDefault = () => {
-    this.setState((state) => {
-      const newSetupTimes = Object.assign({}, this.props.defaultTimes);
-      const newCurrentTimes = Object.assign({}, this.props.defaultTimes);
-      return {
-        setupTimes: newSetupTimes,
-        currentTimes: newCurrentTimes,
-        category: "session",
-        clock: {
-          minutes: newCurrentTimes["session"],
-          seconds: 0,
-        },
-      };
-    });
-  };
-
   switchCategory = () => {
     if (this.state.category === "session") {
-      this.updateClock("break");
+      this.switchClockToCategory("break");
     } else {
-      this.updateClock("session");
+      this.switchClockToCategory("session");
     }
   };
 
@@ -153,19 +147,20 @@ class Clock extends React.Component {
       <div id="clock-app">
         <Timer
           category={this.state.category}
-          currentTimes={this.state.currentTimes}
+          times={this.state.times}
           clock={this.state.clock}
+          paused={this.state.paused}
           onChange={this.handleTimerInput}
         />
         <div id="settings">
           <Setup
             category="session"
-            time={this.state.setupTimes["session"]}
+            time={this.state.times["session"]}
             onChange={this.handleSetupInput}
           />
           <Setup
             category="break"
-            time={this.state.setupTimes["break"]}
+            time={this.state.times["break"]}
             onChange={this.handleSetupInput}
           />
         </div>
@@ -176,10 +171,9 @@ class Clock extends React.Component {
 
 const Timer = (props) => {
   const header =
-    "Session: " +
-    props.currentTimes["session"] +
-    " + Break: " +
-    props.currentTimes["break"];
+    "Session: " + props.times["session"] + " + Break: " + props.times["break"];
+
+  const label = props.category + (props.paused ? " (paused)" : "");
 
   const display =
     (props.clock.minutes < 10
@@ -203,7 +197,7 @@ const Timer = (props) => {
         <h1>{header}</h1>
       </header>
       <h4 className="block-label" id="timer-label">
-        {props.category}
+        {label}
       </h4>
       <p className="block-display" id="time-left">
         {display}
