@@ -163,7 +163,6 @@ class Clock extends React.Component {
       <div id="clock-app">
         <Timer
           category={this.state.category}
-          times={this.state.times}
           clock={this.state.clock}
           paused={this.state.paused}
           onChange={this.handleTimerInput}
@@ -187,9 +186,6 @@ class Clock extends React.Component {
 }
 
 const Timer = (props) => {
-  const header =
-    "Session: " + props.times["session"] + " + Break: " + props.times["break"];
-
   const label =
     props.category.toUpperCase() + (props.paused ? " (paused)" : "");
 
@@ -211,27 +207,28 @@ const Timer = (props) => {
 
   return (
     <div className={"block " + props.category + "-colors"} id="timer">
-      <header id="timer-header">
-        <h1>{header}</h1>
-      </header>
       <h4 className="block-label" id="timer-label">
         {label}
       </h4>
+
       <p className="block-display" id="time-left">
         {display}
       </p>
-      <button
-        type="button"
-        className="btn-start-stop"
-        id="start_stop"
-        onClick={startStop}
-      >
-        <i className="fas fa-play"></i>
-        {/* <i className="fas fa-pause"></i> */}
-      </button>
-      <button type="button" className="btn-reset" id="reset" onClick={reset}>
-        <i className="fas fa-undo-alt"></i>
-      </button>
+
+      <div className="buttons">
+        <button
+          type="button"
+          className="btn-start-stop"
+          id="start_stop"
+          onClick={startStop}
+        >
+          <i className="fas fa-play"></i>
+          {/* <i className="fas fa-pause"></i> */}
+        </button>
+        <button type="button" className="btn-reset" id="reset" onClick={reset}>
+          <i className="fas fa-undo-alt"></i>
+        </button>
+      </div>
     </div>
   );
 };
@@ -266,23 +263,25 @@ const Setup = (props) => {
         {props.time}
       </p>
 
-      <button
-        type="button"
-        className="btn-increment"
-        id={btnIncId}
-        onClick={increment}
-      >
-        <i className="fas fa-chevron-up"></i>
-      </button>
+      <div className="buttons">
+        <button
+          type="button"
+          className="btn-increment"
+          id={btnIncId}
+          onClick={increment}
+        >
+          <i className="fas fa-chevron-up"></i>
+        </button>
 
-      <button
-        type="button"
-        className="btn-decrement"
-        id={btnDecId}
-        onClick={decrement}
-      >
-        <i className="fas fa-chevron-down"></i>
-      </button>
+        <button
+          type="button"
+          className="btn-decrement"
+          id={btnDecId}
+          onClick={decrement}
+        >
+          <i className="fas fa-chevron-down"></i>
+        </button>
+      </div>
     </div>
   );
 };
