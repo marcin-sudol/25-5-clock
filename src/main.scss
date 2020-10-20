@@ -4,8 +4,9 @@ $color-light: #ddd;
 $color-medium: #bbb;
 $color-dark: #444;
 
-$accent-primary: #0075c4;
-$accent-secondary: #d65108;
+$accent-primary: #e76f51;
+$accent-secondary: #2a9d8f;
+$accent-highlight: #e9c46a;
 
 $font-normal: "Jura", sans-serif;
 $font-em: "Oxanium", cursive;
@@ -50,6 +51,7 @@ $font-em: "Oxanium", cursive;
       flex-direction: row;
       button {
         flex: 1 1 50%;
+        border: none;
         border-radius: 5px;
         transition: background-color 0.3s ease;
 
@@ -110,11 +112,12 @@ $font-em: "Oxanium", cursive;
     color: $color;
   }
   button {
-    border: 1px solid $color;
-    color: $color;
+    background-color: $color;
+    color: $color-lighter;
+
     &:hover {
-      background-color: $color;
-      color: $color-lighter;
+      background-color: $accent-highlight;
+      color: $color;
     }
   }
 }
