@@ -29,6 +29,8 @@ class Clock extends React.Component {
     this.switchClockToCategory = this.switchClockToCategory.bind(this);
     this.switchCategory = this.switchCategory.bind(this);
     this.clockStep = this.clockStep.bind(this);
+    this.playAudio = this.playAudio.bind(this);
+    this.pauseAudio = this.pauseAudio.bind(this);
   }
 
   handleSetupInput = (category, change) => {
@@ -91,6 +93,7 @@ class Clock extends React.Component {
   };
 
   resetClock = () => {
+    this.pauseAudio();
     this.setState(
       {
         times: Object.assign({}, this.props.defaultTimes),
@@ -123,9 +126,10 @@ class Clock extends React.Component {
   };
 
   clockStep = () => {
-    if (this.state.clock.minutes === 0 && this.state.clock.seconds === 0)
+    if (this.state.clock.minutes === 0 && this.state.clock.seconds === 0) {
+      this.playAudio();
       this.switchCategory();
-    else if (this.state.clock.seconds > 0)
+    } else if (this.state.clock.seconds > 0)
       this.setState((state) => ({
         clock: {
           minutes: state.clock.minutes,
@@ -139,6 +143,18 @@ class Clock extends React.Component {
           seconds: 59,
         },
       }));
+  };
+
+  playAudio = () => {
+    const audio = document.getElementById("beep");
+    audio.currentTime = 0;
+    audio.play();
+  };
+
+  pauseAudio = () => {
+    const audio = document.getElementById("beep");
+    audio.pause();
+    // audio.currentTime = 0;
   };
 
   // ----- RENDER -----
@@ -164,6 +180,7 @@ class Clock extends React.Component {
             onChange={this.handleSetupInput}
           />
         </div>
+        <audio id="beep" src={this.props.audioSrc} />
       </div>
     );
   }
@@ -173,7 +190,8 @@ const Timer = (props) => {
   const header =
     "Session: " + props.times["session"] + " + Break: " + props.times["break"];
 
-  const label = props.category + (props.paused ? " (paused)" : "");
+  const label =
+    props.category.toUpperCase() + (props.paused ? " (paused)" : "");
 
   const display =
     (props.clock.minutes < 10
@@ -271,6 +289,9 @@ const Setup = (props) => {
 
 // ----- RENDER COMPONENT -----
 ReactDOM.render(
-  <Clock defaultTimes={{ session: 25, break: 5 }} />,
+  <Clock
+    defaultTimes={{ session: 25, break: 5 }}
+    audioSrc="https://raw.githubusercontent.com/freeCodeCamp/cdn/master/build/testable-projects-fcc/audio/BeepSound.wav"
+  />,
   document.getElementById("root")
 );
