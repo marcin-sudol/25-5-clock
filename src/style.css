@@ -31,7 +31,7 @@
       #clock-app .block .buttons button {
         flex: 1 1 50%;
         border: none;
-        border-radius: 5px;
+        border-radius: 999px;
         transition: background-color 0.3s ease; }
         #clock-app .block .buttons button:active {
           transform: translateY(2px); }
