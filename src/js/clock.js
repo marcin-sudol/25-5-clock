@@ -13,6 +13,8 @@ class Clock extends React.Component {
       running: false,
       paused: false,
       timerId: 0,
+      startingTime: Date.now(),
+      timeToNextStep: 1000,
     };
 
     // ----- BINDING METHODS -----
@@ -33,10 +35,11 @@ class Clock extends React.Component {
   handleSetupInput = (category, change) => {
     if (!this.state.running) {
       const newTimes = Object.assign({}, this.state.times);
-      if (change === "increment" && this.state.times[category] < 60)
+      if (change === "increment" && this.state.times[category] < 60) {
         newTimes[category] = this.state.times[category] + 1;
-      else if (change === "decrement" && this.state.times[category] > 1)
+      } else if (change === "decrement" && this.state.times[category] > 1) {
         newTimes[category] = this.state.times[category] - 1;
+      }
 
       this.setState(
         {
@@ -58,26 +61,34 @@ class Clock extends React.Component {
   };
 
   startClock = () => {
-    this.setState({
+    this.setState((state) => ({
       running: true,
       paused: false,
-      timerId: window.setInterval(this.clockStep, 1000),
-    });
+      timerId: window.setTimeout(this.clockStep, state.timeToNextStep),
+      startingTime: Date.now(),
+    }));
   };
 
   pauseClock = () => {
-    window.clearInterval(this.state.timerId);
+    window.clearTimeout(this.state.timerId);
+    let timeLeft =
+      this.state.startingTime + this.state.timeToNextStep - Date.now();
+    if (timeLeft < 0) {
+      timeLeft = 0;
+    }
     this.setState({
       running: true,
       paused: true,
+      timeToNextStep: timeLeft,
     });
   };
 
   stopClock = () => {
-    window.clearInterval(this.state.timerId);
+    window.clearTimeout(this.state.timerId);
     this.setState({
       running: false,
       paused: false,
+      timeToNextStep: 1000,
     });
   };
 
@@ -126,20 +137,32 @@ class Clock extends React.Component {
     if (this.state.clock.minutes === 0 && this.state.clock.seconds === 0) {
       this.playAudio();
       this.switchCategory();
-    } else if (this.state.clock.seconds > 0)
+      this.setState({
+        startingTime: Date.now(),
+        timeToNextStep: 1000,
+        timerId: window.setTimeout(this.clockStep, 1000),
+      });
+    } else if (this.state.clock.seconds > 0) {
       this.setState((state) => ({
         clock: {
           minutes: state.clock.minutes,
           seconds: state.clock.seconds - 1,
         },
+        startingTime: Date.now(),
+        timeToNextStep: 1000,
+        timerId: window.setTimeout(this.clockStep, 1000),
       }));
-    else
+    } else {
       this.setState((state) => ({
         clock: {
           minutes: state.clock.minutes - 1,
           seconds: 59,
         },
+        startingTime: Date.now(),
+        timeToNextStep: 1000,
+        timerId: window.setTimeout(this.clockStep, 1000),
       }));
+    }
   };
 
   playAudio = () => {
@@ -151,7 +174,6 @@ class Clock extends React.Component {
   pauseAudio = () => {
     const audio = document.getElementById("beep");
     audio.pause();
-    // audio.currentTime = 0;
   };
 
   // ----- RENDER -----
